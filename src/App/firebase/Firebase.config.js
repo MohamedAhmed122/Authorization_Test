@@ -21,3 +21,27 @@ var firebaseConfig = {
   
   export default firebase;
   export  const db = firebase.firestore();
+
+
+
+  const auth = firebase.auth()
+
+  export const RegisterInFirebase = async cred =>{
+    try {
+        const response = await auth.createUserWithEmailAndPassword(cred.email, cred.password);
+        await response.user.updateProfile({
+            displayName: cred.displayName
+        })
+        return await setUserProfileData(response.user)
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const setUserProfileData = user =>{
+    db.collection('users').doc(user.uid).set({
+        displayName: user.displayName,
+        email: user.email,
+        createdAt : firebase.firestore.FieldValue.serverTimestamp()
+    })
+}

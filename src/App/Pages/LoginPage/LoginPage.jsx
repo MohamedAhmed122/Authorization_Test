@@ -9,6 +9,8 @@ import CustomButton from '../../Components/CustomButton/CustomButton';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin'
 
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import {userLogin} from '../../Redux/Auth/AuthActions'
 
 const validationSchema = Yup.object({
     email: Yup.string().required().email(),
@@ -20,7 +22,7 @@ const validationSchema = Yup.object({
 export default function LoginPage() {
 
     const auth = firebase.auth()
-
+    const dispatch = useDispatch()
     const history = useHistory()
 
     return (
@@ -35,7 +37,9 @@ export default function LoginPage() {
                 initialValues={initialValues}
                 onSubmit={async(values)=>{
                     try {
-                        await  auth.signInWithEmailAndPassword(values.email, values.password)
+                       const result = await  auth.signInWithEmailAndPassword(values.email, values.password)
+                       dispatch(userLogin(result.user))
+                       console.log(result.user)
                     } catch (error) {
                         console.log(error)
                     }

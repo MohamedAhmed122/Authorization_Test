@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
+import firebase from '../../firebase/Firebase.config'
 
 import FormInput from '../../Components/FormInput/FormInput'
 import CustomButton from '../../Components/CustomButton/CustomButton';
@@ -9,6 +10,8 @@ import SocialLogin from '../../Components/SocialLogin/SocialLogin'
 
 import './StyleRegister.css'
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../../Redux/Auth/AuthActions'
 
 const validationSchema = Yup.object({
     name: Yup.string().required(),
@@ -18,11 +21,28 @@ const validationSchema = Yup.object({
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
-  const initialValues ={name:'', email:'', password:'', confirmPassword:'' }
+const initialValues ={name:'', email:'', password:'', confirmPassword:'' }
 
 export default function RegisterPage() {
 
     const history = useHistory()
+
+    const auth = firebase.auth()
+
+    const dispatch = useDispatch()
+
+     const RegisterInFirebase = async cred =>{
+        try {
+            const response = await auth.createUserWithEmailAndPassword(cred.email, cred.password);
+            await response.user.updateProfile({
+                displayName: cred.name
+            })
+            dispatch(userLogin(response.user))
+        }catch (error) {
+            console.log(error)
+        }
+    }
+  
 
     return (
         <div className='flex_Col register' >
@@ -34,7 +54,7 @@ export default function RegisterPage() {
             <Formik
                 validationSchema={validationSchema}
                 initialValues={initialValues}
-                onSubmit={(values)=>{console.log(values)}}
+                onSubmit={(values)=>  RegisterInFirebase(values)}
             >
                 {({ dirty,isSubmitting, isValid })=>( 
                     <Form className='flex_Col'>
