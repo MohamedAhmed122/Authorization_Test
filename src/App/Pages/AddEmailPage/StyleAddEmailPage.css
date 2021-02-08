@@ -1,0 +1,12 @@
+.add_email{
+    height: 100vh;
+}
+.add_email > img{
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+}
+.add_email p{
+    margin: 20px 0px;
+    color: gray;
+}

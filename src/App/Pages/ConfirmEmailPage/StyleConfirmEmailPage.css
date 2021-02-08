@@ -1,0 +1,12 @@
+.confirm_email_page{
+    height: 100vh;
+}
+.confirm_email_small_text{
+    color: #4E74F5;
+}
+.long_text{
+    margin-top: 30px;
+    color: gray;
+    text-align: center;
+    line-height: 40px;
+}
