@@ -10,8 +10,9 @@ import SocialLogin from '../../Components/SocialLogin/SocialLogin'
 
 import './StyleRegister.css'
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../Redux/Auth/AuthActions'
+import { useEffect } from 'react'
 
 const validationSchema = Yup.object({
     name: Yup.string().required(),
@@ -28,6 +29,13 @@ export default function RegisterPage() {
     const history = useHistory()
     const auth = firebase.auth()
     const dispatch = useDispatch()
+    const { isAuthenticated } = useSelector(state => state.auth)
+
+    useEffect(()=>{
+        if(isAuthenticated){
+           history.push('/confirm-email') 
+        }
+    },[isAuthenticated, history])
 
      const RegisterInFirebase = async cred =>{
         try {
@@ -66,7 +74,7 @@ export default function RegisterPage() {
                             <FormInput name='email' type='text' placeholder='Email' />
                             <FormInput name='password' type='password' placeholder='Password' />
                             <FormInput name='confirmPassword' type='password' placeholder='Confirm Password' />
-                            <CustomButton title='Login' type='submit' disabled={!isValid || isSubmitting || !dirty}/>
+                            <CustomButton title='Register' type='submit' disabled={!isValid || isSubmitting || !dirty}/>
                             <div> you already have account! <span onClick={()=>history.push('/login')} className='link_span'> Login</span></div>
                         </Form>   
                     )}

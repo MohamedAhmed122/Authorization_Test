@@ -11,6 +11,7 @@ import SocialLogin from '../../Components/SocialLogin/SocialLogin'
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import {userLogin} from '../../Redux/Auth/AuthActions'
+import { useEffect } from 'react'
 
 const validationSchema = Yup.object({
     email: Yup.string().required().email(),
@@ -24,8 +25,15 @@ export default function LoginPage() {
     const auth = firebase.auth()
 
     const { isAuthenticated } = useSelector(state =>state.auth)
+
     const dispatch = useDispatch()
     const history = useHistory()
+    
+    useEffect(()=>{
+        if(isAuthenticated){
+           history.push('/confirm-email') 
+        }
+    },[isAuthenticated, history])
 
     return (
         <div className='flex_Col register' >

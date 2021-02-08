@@ -7,7 +7,7 @@ export default function EmailSentPage({history}) {
             <img src='/assets/email.svg'  alt='Lock'/>
             <h1>Email sent</h1>
             <p>An email was sent to your e-mail to change your password </p>
-            <CustomButton title='Go Back to the main page' width={360} onClick={()=>history.push('/')} />
+            <CustomButton title='Go Back to the main page' width={360} onClick={()=>history.push('/home')} />
         </div>
     )
 }
