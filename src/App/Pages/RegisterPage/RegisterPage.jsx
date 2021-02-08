@@ -26,9 +26,7 @@ const initialValues ={name:'', email:'', password:'', confirmPassword:'' }
 export default function RegisterPage() {
 
     const history = useHistory()
-
     const auth = firebase.auth()
-
     const dispatch = useDispatch()
 
      const RegisterInFirebase = async cred =>{
@@ -38,6 +36,8 @@ export default function RegisterPage() {
                 displayName: cred.name
             })
             dispatch(userLogin(response.user))
+            history.push('/confirm-email')
+            
         }catch (error) {
             console.log(error)
         }
@@ -46,28 +46,33 @@ export default function RegisterPage() {
 
     return (
         <div className='flex_Col register' >
-            <div className='register_text'>
-                <h1>Registration</h1>
-                <p>Register and get access to account analytics.</p>
-            </div>
-            <SocialLogin />
-            <Formik
-                validationSchema={validationSchema}
-                initialValues={initialValues}
-                onSubmit={(values)=>  RegisterInFirebase(values)}
-            >
-                {({ dirty,isSubmitting, isValid })=>( 
-                    <Form className='flex_Col'>
-                        <FormInput name='name' type='text' placeholder='Name' />
-                        <FormInput name='email' type='text' placeholder='Email' />
-                        <FormInput name='password' type='password' placeholder='Password' />
-                        <FormInput name='confirmPassword' type='password' placeholder='Confirm Password' />
-                        <CustomButton title='Login' type='submit'/>
-                        <div> you already have account! <span onClick={()=>history.push('/login')} className='link_span'> Login</span></div>
-                    </Form>   
-                )}
+            <div className='register_form'>
+                <div className='register_text'>
+                    <h1>Registration</h1>
+                    <p>Register and get access to account analytics.</p>
+                </div>
+                <SocialLogin />
+                <Formik
+                    validationSchema={validationSchema}
+                    initialValues={initialValues}
+                    onSubmit={(values)=> {
+                        RegisterInFirebase(values)
+                        
+                    }}
+                >
+                    {({ dirty,isSubmitting, isValid })=>( 
+                        <Form className='flex_Col'>
+                            <FormInput name='name' type='text' placeholder='Name' />
+                            <FormInput name='email' type='text' placeholder='Email' />
+                            <FormInput name='password' type='password' placeholder='Password' />
+                            <FormInput name='confirmPassword' type='password' placeholder='Confirm Password' />
+                            <CustomButton title='Login' type='submit' disabled={!isValid || isSubmitting || !dirty}/>
+                            <div> you already have account! <span onClick={()=>history.push('/login')} className='link_span'> Login</span></div>
+                        </Form>   
+                    )}
 
-            </Formik>
+                </Formik>
+            </div>
         </div>
     )
 }

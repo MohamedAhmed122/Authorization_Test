@@ -32,3 +32,11 @@ button{
 a{
   text-decoration: none;
 }
+
+@media(max-width:550px){
+  p{
+    width: 90%;
+    
+    text-align: center;
+  }
+}

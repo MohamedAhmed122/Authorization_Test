@@ -1,7 +1,7 @@
 .register{
-    margin-top: 30px;
+    margin-top: 10px;
     height: auto;
-    min-height: 110vh;
+    min-height: 100vh;
 }
 .register_text{
     margin-bottom: 20px;
@@ -13,6 +13,8 @@
 .register_text p{
     color: gray;
     text-align: center;
+    margin-top:20px;
+    margin-bottom: 40px;
 }
 .link_span{
     color: #4E74F5;
@@ -22,3 +24,4 @@
 .link_span:hover{
     color: #7f9cfd;
 }
+

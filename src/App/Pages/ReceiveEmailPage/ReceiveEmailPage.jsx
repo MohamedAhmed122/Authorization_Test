@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
+
+import { Form, Formik } from 'formik'
+import * as Yup from 'yup'
 
 
+import FormInput from '../../Components/FormInput/FormInput'
 import CustomButton from '../../Components/CustomButton/CustomButton'
-import CustomInput from '../../Components/CustomInput/CustomInput'
 
-export default function ReceiveEmailPage() {
-    const [input, setInput ] = useState('')
+
+export default function ReceiveEmailPage({history}) {
+
+    const validationSchema = Yup.object({
+        code: Yup.string().required()
+    });
+   
     return (
         <div className='flex_Col confirm_email_page'>
         <h1>I didn't receive an email</h1>
@@ -16,9 +24,22 @@ export default function ReceiveEmailPage() {
             or write about it to support@livedune.ru and we will activate your account.
         </p>
         <div  style={{marginTop: 50}}/>
-        <CustomInput placeholder='Code' width={420} value={input} onChange={(e) => setInput(e.target.value)} />
-        <CustomButton title='Confirm email' width={400} onClick={()=>setInput('')} />
-        <p style={{cursor: 'pointer'}}>Cancel</p> 
+        <Formik
+            validationSchema={validationSchema}
+            initialValues={{code:''}}
+            onSubmit={(values)=>{
+                console.log(values)
+                history.push('/sent-email')
+            }}
+        >
+            {({ dirty,isSubmitting, isValid })=>( 
+                <Form className='flex_Col'>
+                    <FormInput placeholder='Code' width={360}  name='code' />
+                    <CustomButton title='Send Again' width={360}  disabled={!isValid || isSubmitting || !dirty}/>
+                </Form>
+            )}
+        </Formik>
+        <div style={{cursor: 'pointer'}} onClick={()=>history.goBack()}>Cancel</div> 
     </div>
     )
 }
