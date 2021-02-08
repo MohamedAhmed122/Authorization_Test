@@ -7,28 +7,24 @@ import FormInput from '../../Components/FormInput/FormInput'
 import CustomButton from '../../Components/CustomButton/CustomButton';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin'
 
-import './StyleRegister.css'
 import { useHistory } from 'react-router-dom';
 
 const validationSchema = Yup.object({
-    name: Yup.string().required(),
     email: Yup.string().required().email(),
     password: Yup.string().required().min(6),
-    confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
 
-  const initialValues ={name:'', email:'', password:'', confirmPassword:'' }
+  const initialValues ={ email:'', password:'' }
 
-export default function RegisterPage() {
+export default function LoginPage() {
 
     const history = useHistory()
 
     return (
         <div className='flex_Col register' >
             <div className='register_text'>
-                <h1>Registration</h1>
-                <p>Register and get access to account analytics.</p>
+                <h1>Login</h1>
+                <p>Welcome, glad to see you again 👋.</p>
             </div>
             <SocialLogin />
             <Formik
@@ -38,12 +34,10 @@ export default function RegisterPage() {
             >
                 {({ dirty,isSubmitting, isValid })=>( 
                     <Form className='flex_Col'>
-                        <FormInput name='name' type='text' placeholder='Name' />
                         <FormInput name='email' type='text' placeholder='Email' />
                         <FormInput name='password' type='password' placeholder='Password' />
-                        <FormInput name='confirmPassword' type='password' placeholder='Confirm Password' />
                         <CustomButton title='Login' type='submit'/>
-                        <div> you already have account! <span onClick={()=>history.push('/login')} className='link_span'> Login</span></div>
+                        <div> you don't have account! <span onClick={()=>history.push('/')} className='link_span'> Register</span></div>
                     </Form>   
                 )}
 
