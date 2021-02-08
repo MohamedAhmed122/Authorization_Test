@@ -1,0 +1,10 @@
+.custom_button{
+    width: 496px;
+    height: 64px;
+    background: #4E74F5;
+    border-radius: 64px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffff;
+}

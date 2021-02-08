@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './App/Components/Navbar/Navbar'
+import SocialLogin from './App/Components/SocialLogin/SocialLogin'
+import CustomInput from './App/Components/CustomInput/CustomInput'
+import CustomButton from './App/Components/CustomButton/CustomButton'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Navbar />
+     <div style={{margin: 100}}>
+      <SocialLogin /> 
+      
+     </div>
+     <div style={{margin: 100}}>
+     <CustomInput placeholder='type somithing here'  /> 
+      
+     </div>
+     <div style={{margin: 100}}>
+     <CustomButton title='GHello ' width={1000}  /> 
+      
+     </div>
+     
     </div>
   );
 }
