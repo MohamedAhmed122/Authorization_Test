@@ -1,0 +1,24 @@
+.register{
+    margin-top: 30px;
+    height: auto;
+    min-height: 110vh;
+}
+.register_text{
+    margin-bottom: 20px;
+}
+.register_text h1{
+    text-align: center;
+    margin-bottom: 15px;
+}
+.register_text p{
+    color: gray;
+    text-align: center;
+}
+.link_span{
+    color: #4E74F5;
+    cursor: pointer;
+    font-weight: bold;
+}
+.link_span:hover{
+    color: #7f9cfd;
+}
